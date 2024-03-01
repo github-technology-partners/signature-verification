@@ -8,9 +8,10 @@ const GITHUB_KEYS_URI = "https://api.github.com/meta/public_keys/secret_scanning
  * @param {String} payload the value to verify
  * @param {String} signature the expected value
  * @param {String} keyID the id of the key used to generated the signature
+ * @param {String} token the token to use for the request
  * @return {void} throws if the signature is invalid
  */
-const verify_signature = async (payload, signature, keyID) => {
+const verify_signature = async (payload, signature, keyID, token) => {
   if (typeof payload !== "string" || payload.length === 0) {
     throw new Error("Invalid payload");
   }
@@ -20,8 +21,9 @@ const verify_signature = async (payload, signature, keyID) => {
   if (typeof keyID !== "string" || keyID.length === 0) {
     throw new Error("Invalid keyID");
   }
-
-  const keys = (await axios.get(GITHUB_KEYS_URI)).data;
+  headers = null
+  if (token) headers = { headers: { Authorization: `Bearer ${token}` } };
+  const keys = (await axios.get(GITHUB_KEYS_URI, headers)).data;
   if (!(keys?.public_keys instanceof Array) || keys.length === 0) {
     throw new Error("No public keys found");
   }
