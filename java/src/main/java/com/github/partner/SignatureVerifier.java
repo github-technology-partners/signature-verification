@@ -22,7 +22,7 @@ import java.security.spec.X509EncodedKeySpec;
 
 public class SignatureVerifier {
     public static final String GITHUB_SECRET_SCANNING_KEYS_URI = "https://api.github.com/meta/public_keys/secret_scanning";
-    public static final String GITHUB_COPILOT_KEYS_URI = "https://api.github.com/meta/public_keys/copilot";
+    public static final String GITHUB_COPILOT_KEYS_URI = "https://api.github.com/meta/public_keys/copilot_api";
     private static final String ENCRYPTION_ALGORTHIM = "EC";
     private static final String HASH_ENCRYPTION_ALGORITHM = "SHA256withECDSA";
 
