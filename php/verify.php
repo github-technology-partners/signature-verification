@@ -3,17 +3,12 @@
 require 'vendor/autoload.php';
 
 use GuzzleHttp\Client;
-use Mdanter\Ecc\Crypto\Signature\SignHasher;
-use Mdanter\Ecc\EccFactory;
-use Mdanter\Ecc\Crypto\Signature\Signer;
-use Mdanter\Ecc\Serializer\PublicKey\PemPublicKeySerializer;
-use Mdanter\Ecc\Serializer\PublicKey\DerPublicKeySerializer;
-use Mdanter\Ecc\Serializer\Signature\DerSignatureSerializer;
 
 class GithubSignatureVerifier
 {
     public const GITHUB_SECRET_SCANNING_KEYS_URI = "https://api.github.com/meta/public_keys/secret_scanning";
     public const GITHUB_COPILOT_KEYS_URI = "https://api.github.com/meta/public_keys/copilot_api";
+    protected const ALGORITHM = OPENSSL_ALGO_SHA256;
 
     public static function verify(string $signature, string $publicKey, string $token, string $payload): bool
     {
@@ -43,26 +38,15 @@ class GithubSignatureVerifier
             return false;
         }
 
-        // Decode the base64 signature
-        $sigData = base64_decode($signature);
+        $key = openssl_pkey_get_public($publicKey);
+        $valid = openssl_verify($payload, base64_decode($signature), $key, self::ALGORITHM);
 
-        $sigSerializer = new DerSignatureSerializer();
-        $sig = $sigSerializer->parse($sigData);
+        if ($valid < 0) {
+            echo 'Error verifying signature: ' . openssl_error_string();
+            return false;
+        }
 
-        $adapter = EccFactory::getAdapter();
-        $generator = EccFactory::getNistCurves()->generator384();
-        $algorithm = 'sha256';
-
-        // Parse public key 
-        $derSerializer = new DerPublicKeySerializer($adapter);
-        $pemSerializer = new PemPublicKeySerializer($derSerializer);
-        $key = $pemSerializer->parse($publicKey);
-
-        $hasher = new SignHasher($algorithm);
-        $hash = $hasher->makeHash($payload, $generator);
-
-        $signer = new Signer($adapter);
-        return $signer->verify($key, $sig, $hash);
+        return $valid === 1;
     }
 }
 

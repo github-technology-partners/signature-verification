@@ -1,6 +1,5 @@
 {
     "require": {
-        "guzzlehttp/guzzle": "^7.0",
-        "mdanter/ecc": "^0.5.0"
+        "guzzlehttp/guzzle": "^7.0"
     }
 }

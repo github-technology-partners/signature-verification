@@ -1,6 +1,6 @@
 # Signature Verification in php
 
-This is a simple example of how to verify a signature in php. It uses mdanter's ecc library to do so.
+This is a simple example of how to verify a signature in php. It uses the `openssl_verify` function to verify the signature.
 
 ## Usage
 
