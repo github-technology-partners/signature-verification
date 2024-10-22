@@ -14,6 +14,7 @@ Each example is in a separate directory, first level directories are the languag
 - [`go`](go/)
 - [`java`](java/)
 - [`javascript`](javascript/)
+- [`php`](php/)
 - [`python/cyrptodome`](python/cryptodome/)
 - [`python/ecdsa`](python/ecdsa)
 - [`ruby`](ruby/)
