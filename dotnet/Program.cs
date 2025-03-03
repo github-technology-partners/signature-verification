@@ -20,7 +20,7 @@ var payloadBytes = System.Text.Encoding.UTF8.GetBytes(payload);
 signer.BlockUpdate(payloadBytes, 0, payloadBytes.Length);
 var verificationResult = signer.VerifySignature(decodedSignature);
 
-Console.WriteLine(verificationResult ? "Signature verified" : "ignature verification failed");
+Console.WriteLine(verificationResult ? "Signature verified" : "Signature verification failed");
 
 
 
