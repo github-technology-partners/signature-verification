@@ -19,6 +19,7 @@ Each example is in a separate directory, first level directories are the languag
 - [`python/ecdsa`](python/ecdsa)
 - [`ruby`](ruby/)
 - [`typescript`](typescript/)
+- [`dotnet`](dotnet/)
 
 ## Implementing signature verification in your service
 
