@@ -1,6 +1,6 @@
 # Signature Verification in Java
 
-This is a simple example of how to verify a signature in Java. The example uses the `BouncyCastle.Cryptography` package to verify a signature.
+This is a simple example of how to verify a signature in .net (net8.0). The example uses the `BouncyCastle.Cryptography` package to verify a signature.
 
 ## Usage
 
